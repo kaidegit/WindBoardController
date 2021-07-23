@@ -96,12 +96,15 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "EndlessLoop"
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
+#pragma clang diagnostic pop
   /* USER CODE END 3 */
 }
 

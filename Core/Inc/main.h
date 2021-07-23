@@ -66,10 +66,10 @@ void Error_Handler(void);
 #define L_MOTOR_IN2_GPIO_Port GPIOE
 #define L_MOTOR_EN_Pin GPIO_PIN_14
 #define L_MOTOR_EN_GPIO_Port GPIOE
-#define R_MOTOR_IN1_Pin GPIO_PIN_13
-#define R_MOTOR_IN1_GPIO_Port GPIOB
-#define R_MOTOR_IN2_Pin GPIO_PIN_11
-#define R_MOTOR_IN2_GPIO_Port GPIOD
+#define R_MOTOR_IN2_Pin GPIO_PIN_13
+#define R_MOTOR_IN2_GPIO_Port GPIOB
+#define R_MOTOR_IN1_Pin GPIO_PIN_11
+#define R_MOTOR_IN1_GPIO_Port GPIOD
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

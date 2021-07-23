@@ -46,7 +46,7 @@ else ()
 endif ()
 
 include_directories(${includes}
-    Hardwares/ADS1X15
+    Hardwares/ADS1X15 Hardwares/CorelessMotor
 )
 
 add_definitions(${defines})

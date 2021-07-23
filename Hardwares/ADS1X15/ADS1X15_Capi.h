@@ -11,7 +11,7 @@ extern "C" {
 
 void ADS1X15_Init();
 
-int16_t ADS1X15_GetVoltage();
+int16_t ADS1X15_GetADCValue();
 
 #ifdef __cplusplus
 }

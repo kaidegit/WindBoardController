@@ -405,9 +405,9 @@ Adafruit_ADS1015 ads;
 
 void ADS1X15_Init() {
     ads.begin();
-    ads.startComparator_SingleEnded(0, 1000);
+    ads.setGain(GAIN_TWO);
 }
 
-int16_t ADS1X15_GetVoltage() {
+int16_t ADS1X15_GetADCValue() {
     return ads.readADC_SingleEnded(0);
 }

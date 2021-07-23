@@ -21,11 +21,14 @@
 #include "main.h"
 #include "i2c.h"
 #include "tim.h"
+#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "stdio.h"
+#include "string.h"
+#include "ADS1X15_Capi.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -90,8 +93,9 @@ int main(void)
   MX_I2C2_Init();
   MX_TIM1_Init();
   MX_TIM10_Init();
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-
+    ADS1X15_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -100,6 +104,11 @@ int main(void)
 #pragma ide diagnostic ignored "EndlessLoop"
   while (1)
   {
+      int16_t vol = ADS1X15_GetVoltage();
+      char ch[30];
+      sprintf(ch,"vol:%d\r\n",vol);
+      HAL_UART_Transmit(&huart1,ch,strlen(ch),0xff);
+      HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

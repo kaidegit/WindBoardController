@@ -105,20 +105,20 @@ int main(void) {
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "EndlessLoop"
     while (1) {
-        LMotor_SetSpeed(2000);
+//        LMotor_SetSpeed(2000);
+////        HAL_Delay(2000);
+//        RMotor_SetSpeed(2000);
+//        HAL_Delay(4000);
+//        RMotor_SetSpeed(0);
+////        HAL_Delay(2000);
+//        LMotor_SetSpeed(0);
 //        HAL_Delay(2000);
-        RMotor_SetSpeed(2000);
-        HAL_Delay(4000);
-        RMotor_SetSpeed(0);
-//        HAL_Delay(2000);
-        LMotor_SetSpeed(0);
-        HAL_Delay(2000);
 
-//      int16_t vol = ADS1X15_GetADCValue();
-//      char ch[30];
-//      sprintf(ch,"vol:%d\r\n",vol);
-//      HAL_UART_Transmit(&huart1,ch,strlen(ch),0xff);
-//      HAL_Delay(1000);
+        int16_t vol = ADS1X15_GetADCValue();
+        char ch[30];
+        sprintf(ch, "adc:%d\r\n", vol);
+        HAL_UART_Transmit(&huart1, ch, strlen(ch), 0xff);
+        HAL_Delay(1000);
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */

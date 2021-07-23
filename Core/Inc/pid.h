@@ -23,6 +23,8 @@ float ConvADCValueToAngle(uint16_t adcValue);
 
 void PID_Init(PID_TypeDef *pid, float kp, float ki, float kd);
 
+void PID_SetAngle(PID_TypeDef *pid, float angle);
+
 extern PID_TypeDef angle_pid;
 
 #endif //WINDBOARDCONTROLLER_PID_H

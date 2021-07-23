@@ -44,3 +44,8 @@ void PID_Calculate(PID_TypeDef *pid, uint16_t inputADC) {
     pid->err_prev = pid->err;
 }
 
+void PID_SetAngle(PID_TypeDef *pid, float angle) {
+    pid->set = 90 - angle;
+}
+
+

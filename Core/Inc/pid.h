@@ -25,6 +25,9 @@ void PID_Init(PID_TypeDef *pid, float kp, float ki, float kd);
 
 void PID_SetAngle(PID_TypeDef *pid, float angle);
 
-extern PID_TypeDef angle_pid;
+void PID_Calculate(PID_TypeDef *pid, uint16_t inputADC);
+
+extern PID_TypeDef l_motor_pid;
+extern PID_TypeDef r_motor_pid;
 
 #endif //WINDBOARDCONTROLLER_PID_H

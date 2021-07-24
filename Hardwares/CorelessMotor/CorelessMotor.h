@@ -7,8 +7,12 @@
 
 #include "stdint.h"
 
-void LMotor_SetSpeed(int32_t speed);
 
-void RMotor_SetSpeed(int32_t speed);
+
+void LMotor_SetSpeed(int16_t speed);
+
+void RMotor_SetSpeed(int16_t speed);
+
+void Motor_SetSpeed(int16_t speed);
 
 #endif //WINDBOARDCONTROLLER_CORELESSMOTOR_H

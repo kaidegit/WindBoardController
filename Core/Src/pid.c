@@ -3,8 +3,10 @@
 //
 
 #include "pid.h"
+#include "stdio.h"
 
-PID_TypeDef angle_pid;
+PID_TypeDef l_motor_pid;
+PID_TypeDef r_motor_pid;
 
 float ConvADCValueToAngle(uint16_t adcValue) {
     return 0.103 * adcValue - 27.37;
@@ -27,7 +29,9 @@ const uint16_t err_min = 5;
 
 void PID_Calculate(PID_TypeDef *pid, uint16_t inputADC) {
     pid->input = ConvADCValueToAngle(inputADC);
-    pid->err = pid->set - pid->input;
+    printf("angle:%d\n", (int) (pid->input));
+    pid->err = pid->input - pid->set;
+//    printf("err:%d\n", (int) (pid->err));
     if ((pid->err < err_min) && (pid->err > err_min)) {
         pid->err = 0;
     }
@@ -40,12 +44,12 @@ void PID_Calculate(PID_TypeDef *pid, uint16_t inputADC) {
     }
     pid->output = pid->kp * pid->err +
                   pid->ki * pid->err_sum +
-                  pid->kd * pid->err_prev;
+                  pid->kd * (pid->err - pid->err_prev);
     pid->err_prev = pid->err;
 }
 
 void PID_SetAngle(PID_TypeDef *pid, float angle) {
-    pid->set = 90 - angle;
+    pid->set = angle;
 }
 
 

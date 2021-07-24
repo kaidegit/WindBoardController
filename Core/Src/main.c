@@ -30,6 +30,7 @@
 #include "string.h"
 #include "ADS1X15_Capi.h"
 #include "CorelessMotor.h"
+#include "pid.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -54,8 +55,13 @@
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-/* USER CODE BEGIN PFP */
 
+/* USER CODE BEGIN PFP */
+int __io_putchar(int ch) {
+    uint8_t temp[1] = {ch};
+    HAL_UART_Transmit(&huart1, temp, 1, 0xff);
+    return (ch);
+}
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -94,10 +100,17 @@ int main(void) {
     MX_TIM1_Init();
     MX_TIM10_Init();
     MX_USART1_UART_Init();
+    MX_TIM14_Init();
     /* USER CODE BEGIN 2 */
     ADS1X15_Init();
+    PID_Init(&l_motor_pid, 150, 0.5, 800);
+    PID_Init(&r_motor_pid, 160, 0.7, 2300);
+    uint16_t angle = 90;
+    PID_SetAngle(&l_motor_pid, angle);
+    PID_SetAngle(&r_motor_pid, angle);
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
     HAL_TIM_PWM_Start(&htim10, TIM_CHANNEL_1);
+    HAL_TIM_Base_Start_IT(&htim14);
     /* USER CODE END 2 */
 
     /* Infinite loop */
@@ -114,11 +127,11 @@ int main(void) {
 //        LMotor_SetSpeed(0);
 //        HAL_Delay(2000);
 
-        int16_t vol = ADS1X15_GetADCValue();
-        char ch[30];
-        sprintf(ch, "adc:%d\r\n", vol);
-        HAL_UART_Transmit(&huart1, ch, strlen(ch), 0xff);
-        HAL_Delay(1000);
+//        int16_t vol = ADS1X15_GetADCValue();
+//        char ch[30];
+//        sprintf(ch, "adc:%d\r\n", vol);
+//        HAL_UART_Transmit(&huart1, ch, strlen(ch), 0xff);
+//        HAL_Delay(1000);
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
@@ -169,7 +182,15 @@ void SystemClock_Config(void) {
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+    if (htim->Instance == htim14.Instance) {
+        uint16_t adcValue = ADS1X15_GetADCValue();
+        PID_Calculate(&l_motor_pid, adcValue);
+        PID_Calculate(&r_motor_pid, adcValue);
+        LMotor_SetSpeed(600 + l_motor_pid.output);
+        RMotor_SetSpeed(600 - r_motor_pid.output);
+    }
+}
 /* USER CODE END 4 */
 
 /**
